@@ -1,12 +1,12 @@
 extends RefCounted
 class_name TurnEngine
 
-var _order_system: OrderSystem
+var _order_system
 
-func _init(order_system: OrderSystem) -> void:
+func _init(order_system) -> void:
 	_order_system = order_system
 
-func apply_action(state: SimState, action: Dictionary) -> Dictionary:
+func apply_action(state, action: Dictionary) -> Dictionary:
 	var events: Array[String] = []
 	var advanced_tick := false
 	match String(action.get("type", "")):
@@ -36,7 +36,7 @@ func apply_action(state: SimState, action: Dictionary) -> Dictionary:
 		"advanced_tick": advanced_tick
 	}
 
-func _try_move(state: SimState, delta: Vector2i) -> bool:
+func _try_move(state, delta: Vector2i) -> bool:
 	var target := state.player_pos + delta
 	if target.y < 0 or target.y >= state.ship_grid.size():
 		return false

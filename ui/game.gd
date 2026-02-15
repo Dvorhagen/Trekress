@@ -1,21 +1,24 @@
 extends Control
 
-@onready var ship_view: ShipView = $MarginContainer/HBoxContainer/ShipView
+const SimGameScript = preload("res://sim/sim_game.gd")
+const SimBootstrapScript = preload("res://sim/bootstrap.gd")
+
+@onready var ship_view: Control = $MarginContainer/HBoxContainer/ShipView
 @onready var tick_label: Label = $MarginContainer/HBoxContainer/RightPanel/TickLabel
 @onready var shields_label: Label = $MarginContainer/HBoxContainer/RightPanel/ShieldsLabel
 @onready var roster_label: RichTextLabel = $MarginContainer/HBoxContainer/RightPanel/RosterLabel
 @onready var log_label: RichTextLabel = $MarginContainer/HBoxContainer/RightPanel/LogLabel
 
-var sim_game: SimGame
+var sim_game
 
 func _ready() -> void:
 	_setup_input_map()
-	sim_game = SimGame.new()
-	if SimBootstrap.load_continue:
+	sim_game = SimGameScript.new()
+	if SimBootstrapScript.load_continue:
 		sim_game.continue_or_new()
 	else:
 		sim_game.start_new_game()
-	SimBootstrap.load_continue = false
+	SimBootstrapScript.load_continue = false
 	_refresh_all([])
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -41,7 +44,7 @@ func _apply_action(action: Dictionary) -> void:
 	_refresh_all(result.get("events", []))
 
 func _refresh_all(new_events: Array) -> void:
-	var state := sim_game.state
+	var state = sim_game.state
 	ship_view.set_state(state.ship_grid, state.player_pos)
 	tick_label.text = "Tick: %d" % state.tick
 	shields_label.text = "Shields: %s" % ("Raised" if state.systems.get("shields", false) else "Lowered")

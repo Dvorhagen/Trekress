@@ -1,19 +1,20 @@
 extends RefCounted
 class_name SaveSystem
 
+const SimStateScript = preload("res://sim/sim_state.gd")
 const SAVE_PATH := "user://autosave_v0.save"
 
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
-func save_state(state: SimState) -> void:
+func save_state(state) -> void:
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
 		return
 	file.store_string(JSON.stringify(state.to_dict()))
 
-func load_state() -> SimState:
-	var state := SimState.new()
+func load_state():
+	var state = SimStateScript.new()
 	if not has_save():
 		return state
 	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
