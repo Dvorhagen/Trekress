@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/game.gd" id="1_4iih2"]
+[ext_resource type="Script" path="res://ui/ship_view.gd" id="2_nkv35"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4iih2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ShipView" type="Control" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+script = ExtResource("2_nkv35")
+
+[node name="RightPanel" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(350, 400)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TickLabel" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Tick: 0"
+
+[node name="ShieldsLabel" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Shields: Lowered"
+
+[node name="RosterTitle" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Crew Roster"
+
+[node name="RosterLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/RightPanel"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+bbcode_enabled = false
+scroll_active = false
+
+[node name="OrdersTitle" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Orders"
+
+[node name="RaiseShieldsButton" type="Button" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Raise Shields"
+
+[node name="EndTurnButton" type="Button" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "End Turn"
+
+[node name="LogTitle" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Message Log"
+
+[node name="LogLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/RightPanel"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+bbcode_enabled = false
+scroll_following = true
+
+[node name="ControlsHint" type="Label" parent="MarginContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+text = "Move: WASD/Arrows/Stick  |  End Turn: E / A Button"
+autowrap_mode = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightPanel/RaiseShieldsButton" to="." method="_on_raise_shields_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightPanel/EndTurnButton" to="." method="_on_end_turn_button_pressed"]
