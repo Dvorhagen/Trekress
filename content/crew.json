@@ -1,0 +1,6 @@
+[
+  {"name": "T'Varen", "role": "Tactical", "skill": 4},
+  {"name": "R. Hale", "role": "Helm", "skill": 3},
+  {"name": "Mina Sol", "role": "Engineering", "skill": 5},
+  {"name": "Dr. Ilya", "role": "Medical", "skill": 4}
+]
